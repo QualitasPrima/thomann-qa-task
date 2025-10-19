@@ -1,5 +1,4 @@
 import { Page } from "@playwright/test";
-import { title } from "process";
 
 export class CableGuyPage {
   constructor(private page: Page) {}

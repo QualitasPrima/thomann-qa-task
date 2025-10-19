@@ -1,0 +1,57 @@
+[
+  {
+    "name": "BNC Combo",
+    "beginning": {
+      "name": "BNC male",
+      "id": 66,
+      "plug": 27
+    },
+    "end": {
+      "name": "BNC female",
+      "id": 122,
+      "plug": 74
+    },
+    "brands": [
+      { "id": 22122, "brand": "Sennheiser", "count": 2 },
+      { "id": 116373, "brand": "Sommer Cable", "count": 1 },
+      { "id": 60633, "brand": "AKG", "count": 1 },
+      { "id": 365511, "brand": "EV", "count": 1 }
+    ]
+  },
+  {
+    "name": "Cinch Combo",
+    "beginning": {
+      "name": "Cinch (RCA) female",
+      "id": 36,
+      "plug": 12
+    },
+    "end": {
+      "name": "Cinch (RCA) male",
+      "id": 35,
+      "plug": 11
+    },
+    "brands": [
+      { "id": 78520, "brand": "Cordial", "count": 5 },
+      { "id": 223049, "brand": "Cioks", "count": 2 },
+      { "id": 125718, "brand": "pro snake", "count": 1 }
+    ]
+  },
+  {
+    "name": "Jack Combo",
+    "beginning": {
+      "name": "Jack 6.3mm TRS female",
+      "id": 38,
+      "plug": 14
+    },
+    "end": {
+      "name": "Jack TRS 6,3 (Stereo)",
+      "id": 21,
+      "plug": 4
+    },
+    "brands": [
+      { "id": 78505, "brand": "Cordial", "count": 7 },
+      { "id": 463468, "brand": "Sommer Cable", "count": 3 },
+      { "id": 37697, "brand": "the sssnake", "count": 1 }
+    ]
+  }
+]
