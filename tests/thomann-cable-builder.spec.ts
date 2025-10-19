@@ -1,69 +1,43 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import { CableGuyPage } from "../pages/CableGuyPage";
+import { ProductPage } from "../pages/ProductPage";
+import { BasketPage } from "../pages/BasketPage";
+import { logSuccess } from "../utils/logger";
+import { getRandomCableCombo } from "../helpers/dataHelper";
 
-const cableBuilderUrl = "https://www.thomann.de/intl/cableguy.html";
-const productName = "Sennheiser GA3030-AM";
-const manufacturerResultText = "2 cables of Sennheiser found";
-const toastMessage = `Item ${productName} is now in the shopping basket.`;
+test.describe("Thomann CableGuy E2E Flow", () => {
+  test("CableGuy → Product → Basket (end-to-end)", async ({ page }) => {
+    const cableGuy = new CableGuyPage(page);
+    const productPage = new ProductPage(page);
+    const basket = new BasketPage(page);
 
-test.describe("Cable purchase flow", () => {
-  test("selects a Sennheiser cable and adds it to the basket", async ({
-    page,
-  }) => {
-    await test.step("Navigate and open cableguy page", async () => {
-      await page.goto(cableBuilderUrl);
-    });
+    // --- Randomize test data via helper ---
+    const { beginning, end, brand, comboName } = getRandomCableCombo();
 
-    await test.step("Accept cookies if prompted", async () => {
-      const acceptCookiesButton = page.getByRole("button", {
-        name: /alright!/i,
-      });
-      if (await acceptCookiesButton.isVisible()) {
-        await acceptCookiesButton.click();
-      }
-    });
+    console.log(
+      `🎯 Combo: ${comboName} | ${beginning} → ${end} | Brand: ${brand}`
+    );
 
-    await test.step("Selecting cable ends", async () => {
-      await page.getByRole("button", { name: /cable beginning/i }).click();
-      await page
-        .locator("div:nth-child(2) > .cg-plugItem__wrapper > .cg-plugImage")
-        .first()
-        .click();
+    // === STEP 1: CableGuy flow ===
+    await cableGuy.goto();
+    await cableGuy.selectCable(beginning, end);
+    await cableGuy.selectManufacturer(brand);
 
-      await page.getByRole("button", { name: /cable end/i }).click();
-      await page
-        .locator(".cg-plugItem__wrapper > .cg-plugImage")
-        .first()
-        .click();
-    });
+    const { title } = await cableGuy.SelectProduct();
 
-    await test.step("Filter results by manufacturer and validate counts", async () => {
-      await page.getByRole("img", { name: /sennheiser/i }).click();
+    // === STEP 2: Product page ===
+    await productPage.verifyLoaded(title);
+    await productPage.verifyPriceAndQuantity();
+    await productPage.addToBasket();
 
-      await expect(page.locator("#cableguy")).toContainText(
-        manufacturerResultText
-      );
-      await expect(page.locator("#cg-results")).toBeVisible();
-    });
+    // 🕒 Wait before checking basket
+    await page.waitForTimeout(1000);
 
-    await test.step("Open the product details page", async () => {
-      await page.getByRole("link", { name: `${productName} 1` }).click();
-      await expect(page.locator("h1")).toContainText(productName);
-    });
+    // === STEP 3: Basket page ===
+    await basket.verifyLoaded();
+    await basket.verifyToast(title);
+    await basket.verifyBasketDetails(title);
 
-    await test.step("Add the product to the basket and confirm toast", async () => {
-      await page.getByRole("button", { name: /add to basket/i }).click();
-      await expect(
-        page.getByText(toastMessage, { exact: false })
-      ).toBeVisible();
-    });
-
-    await test.step("Verify product is present in the basket", async () => {
-      const basketProductLink = page.getByRole("link", {
-        name: productName,
-        exact: true,
-      });
-      await expect(basketProductLink).toBeVisible();
-      await basketProductLink.click();
-    });
+    logSuccess("✅ Full journey validated successfully!");
   });
 });

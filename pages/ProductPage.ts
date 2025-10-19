@@ -20,7 +20,7 @@ export class ProductPage {
    * ✅ Ensure the product page has loaded
    */
   async verifyLoaded(expectedTitle: string) {
-    logStep("ProductPage", `Verifying product page for: ${expectedTitle}`);
+    logStep("ProductPage", `Verify product page for: ${expectedTitle}`);
 
     await expect(this.page.locator(this.selectors.title)).toContainText(
       expectedTitle,
@@ -33,15 +33,23 @@ export class ProductPage {
    * ✅ Confirm price and quantity elements are visible and valid
    */
   async verifyPriceAndQuantity() {
-    const priceEl = this.page.locator(this.selectors.price);
+    const priceEl = this.page.locator("div.price.fx-text.fx-text--no-margin");
     await expect(priceEl).toBeVisible({ timeout: CONFIG.TIMEOUT.medium });
 
-    const price = (await priceEl.textContent())?.trim() || "N/A";
+    const price = await priceEl.evaluate((el) => {
+      const node = Array.from(el.childNodes).find(
+        (n) => n.nodeType === Node.TEXT_NODE
+      );
+      return node ? node.textContent?.trim() ?? "N/A" : "N/A";
+    });
 
-    const qtyEl = this.page.locator(this.selectors.quantity);
+    const qtyEl = this.page.locator(".fx-input-quantity__label");
     await expect(qtyEl).toHaveText("1", { timeout: CONFIG.TIMEOUT.medium });
 
-    logStep("Product", `✅ Check Product Price and quantity: ${price}, Qty: 1`);
+    logStep(
+      "ProductPage",
+      `✅ Check Product Price and quantity: ${price}, Qty: 1`
+    );
   }
 
   /**
@@ -51,6 +59,6 @@ export class ProductPage {
     const addBtn = this.page.locator(this.selectors.addToBasket);
     await expect(addBtn).toBeVisible({ timeout: CONFIG.TIMEOUT.medium });
     await addBtn.click();
-    logStep("ProductPage", "🛒 Add Product Basket clicked.");
+    logStep("ProductPage", "🛒 Click Add To Basket .");
   }
 }

@@ -2,15 +2,24 @@ import { Page, Locator, expect } from "@playwright/test";
 import { CONFIG } from "../utils/config";
 import { logStep } from "../utils/logger";
 
-// ✅ Click only if visible
+// ✅ Click cookie/banner if visible
 export async function clickIfVisible(
   locator: Locator,
   timeout = CONFIG.TIMEOUT.short
-) {
-  if (await locator.isVisible({ timeout })) {
-    await locator.click();
-    logStep("UI", "Clicked visible element");
-    return true;
+): Promise<boolean> {
+  try {
+    if (await locator.isVisible({ timeout })) {
+      await locator.click();
+      logStep("UI", "✅ Cookie/banner element detected and clicked.");
+      return true;
+    } else {
+      logStep("UI", "ℹ️ No cookie/banner element found — skipping.");
+    }
+  } catch {
+    logStep(
+      "UI",
+      "⚠️ Element not clickable or already gone — continuing test."
+    );
   }
   return false;
 }
@@ -22,16 +31,4 @@ export async function getText(locator: Locator, fallback = "N/A") {
   } catch {
     return fallback;
   }
-}
-
-// ✅ Wait for navigation
-export async function waitForNavigation(page: Page, pattern: RegExp) {
-  await page.waitForURL(pattern, { timeout: CONFIG.TIMEOUT.long });
-  logStep("UI", `Navigation matched ${pattern}`);
-}
-
-// ✅ Simple text assert
-export async function expectNormalizedText(locator: Locator, expected: string) {
-  const text = ((await locator.textContent()) || "").toLowerCase().trim();
-  expect(text).toContain(expected.toLowerCase().trim());
 }
