@@ -1,10 +1,9 @@
 import { expect, Page } from "@playwright/test";
+import { CONFIG } from "../utils/config";
+import { logStep } from "../utils/logger";
 
 export class CableGuyPage {
   readonly page: Page;
-
-  // Inline base URL (we'll refactor to utils/config later)
-  private BASE_URL = "https://www.thomann.de/intl";
 
   // Minimal selectors (we'll expand later)
   private selectors = {
@@ -19,28 +18,31 @@ export class CableGuyPage {
   }
 
   async goto() {
-    await this.page.goto(`${this.BASE_URL}/cableguy.html`, {
+    logStep("CableGuy", "Navigating to CableGuy page...");
+    await this.page.goto(`${CONFIG.BASE_URL}/cableguy.html`, {
       waitUntil: "domcontentloaded",
     });
 
-    const btn = this.page.locator(this.selectors.cookieAccept);
-    if (await btn.isVisible().catch(() => false)) {
-      await btn.click();
+    const cookie = this.page.locator(this.selectors.cookieAccept);
+    if (await cookie.isVisible().catch(() => false)) {
+      await cookie.click();
+      logStep("CableGuy", "Accepted cookies.");
     }
+
     await expect(this.page).toHaveURL(/cableguy\.html/);
   }
 
   async selectCable(begin: string, end: string) {
-    // Beginning
+    logStep("CableGuy", `Selecting cable beginning: ${begin}`);
     await this.page.locator(this.selectors.cableBeginBtn).click();
-    const beginCard = this.page.locator(this.selectors.plugName(begin)).first();
-    await beginCard.waitFor({ state: "visible", timeout: 20000 });
-    await beginCard.locator("..").locator(".cg-plugImage").click();
+    const beginPlug = this.page.locator(this.selectors.plugName(begin)).first();
+    await beginPlug.waitFor({ state: "visible", timeout: CONFIG.TIMEOUT.long });
+    await beginPlug.locator("..").locator(".cg-plugImage").click();
 
-    // End
+    logStep("CableGuy", `Selecting cable end: ${end}`);
     await this.page.locator(this.selectors.cableEndBtn).click();
-    const endCard = this.page.locator(this.selectors.plugName(end)).first();
-    await endCard.waitFor({ state: "visible", timeout: 20000 });
-    await endCard.locator("..").locator(".cg-plugImage").click();
+    const endPlug = this.page.locator(this.selectors.plugName(end)).first();
+    await endPlug.waitFor({ state: "visible", timeout: CONFIG.TIMEOUT.long });
+    await endPlug.locator("..").locator(".cg-plugImage").click();
   }
 }
