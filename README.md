@@ -110,7 +110,7 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ├── 📄 playwright.config.ts # Playwright test runner config
 ├── 📄 README.md # Project documentation and guide 🎶
 └── 📄 tsconfig.json # TypeScript configuration
-
+```
 ---
 
 ## ⚙️ Setup & Execution
