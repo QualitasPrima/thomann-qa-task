@@ -78,6 +78,7 @@ Each run uses a different random combination, ensuring **test variety** and **da
 
 ## 📂 Project Structure
 
+```text
 📂 thomann-qa-task/
 ├── 📁 .github/
 │ └── 📁 workflows/
@@ -125,47 +126,39 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ### 📦 Install & Run
 
 **Clone the repository**
+`git clone https://github.com/QualitasPrima/thomann-qa-task.git`
 
-*git clone https://github.com/QualitasPrima/thomann-qa-task.git*
+**Navigate into the directory**
+`cd thomann-qa-task`
 
-*cd thomann-qa-task*
-
-**Install dependencies**
-
-*npm install*
+**Install Node.js dependencies**
+`npm install`
 
 **Install Playwright browsers (once)**
-
-*npx playwright install*
+`npx playwright install`
 
 ---
 
 ### ▶️ Run Tests
 
 **Run tests in UI mode (visual)**
-
-*npx playwright test --ui*
+`npx playwright test --ui`
 
 **Run tests headlessly (CLI)**
-
-*npx playwright test*
+`npx playwright test`
 
 **Open the HTML test report**
-
-*npx playwright show-report*
+`npx playwright show-report`
 
 ---
 
 ### 📊 Test Reporting
 
-After running tests, an HTML report is automatically generated under:
+After running tests, an HTML report is automatically generated under the following path:
+`playwright-report/index.html`
 
-*playwright-report/index.html*
-
-
-You can view it by running:
-
-*npm run report*
+You can view it by running the script defined in your package.json:
+`npm run report`
 
 ---
 
@@ -191,16 +184,13 @@ This style promotes human-readable test execution even without needing or openin
 
 ### 🤖 Continuous Integration (CI)
 
-This project includes a GitHub Actions workflow located in:
-
-*.github/workflows/playwright.yml*
-
+This project includes a **GitHub Actions workflow** located in the following path:
+`.github/workflows/playwright.yml`
 
 By default, tests run automatically on:
 
-- Every push or pull request to main or master
-
-- Artifacts (HTML reports) are uploaded and retained for 30 days.
+* **Every push or pull request** to `main` or `master`.
+* Artifacts (HTML reports) are uploaded and retained for **30 days**.
 
 ---
 
