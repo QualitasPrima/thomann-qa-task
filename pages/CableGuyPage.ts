@@ -34,7 +34,7 @@ export class CableGuyPage {
     await cookiesBanner(this.page.locator(this.selectors.cookieAccept));
     await expect(this.page.locator(this.selectors.cableBeginBtn)).toBeVisible();
 
-    logStep("CableGuyPage", "CableGuyPage Succesfully loads");
+    logStep("CableGuyPage", "CableGuy page succesfully loads");
   }
 
   /** ✅ Select plug combination (beginning → end) */
@@ -48,7 +48,7 @@ export class CableGuyPage {
 
   /** ✅ Select manufacturer and validate counts (headline vs actual results) */
   async selectManufacturerAtRandom(name: string) {
-    logStep("CableGuyPage", `Selecting manufacturer: ${name}`);
+    logStep("CableGuyPage", `Select manufacturer at random: ${name}`);
 
     // Click the manufacturer logo
     const logo = this.page.locator(this.selectors.manufacturerByAlt(name));
@@ -76,7 +76,7 @@ export class CableGuyPage {
     // --- Log and assert ---
     logStep(
       "CableGuyPage",
-      `🎧 ${name} | Cable found count: ${headlineCount} | Products rendered: ${actualCount}`
+      `🎧 ${name} | Cables found count: ${headlineCount} | Products displayed: ${actualCount}`
     );
 
     expect(actualCount).toBeGreaterThan(0);
@@ -99,7 +99,7 @@ export class CableGuyPage {
     const title = await getText(chosen.locator(this.selectors.productTitle));
     const price = await getText(chosen.locator(this.selectors.productPrice));
 
-    logStep("CableGuyPage", `Click on product: ${title} (${price})`);
+    logStep("CableGuyPage", `Click on product at random: ${title} (${price})`);
 
     await chosen.locator("a.product__content").click();
     return { title, price };

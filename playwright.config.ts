@@ -60,7 +60,7 @@ export default defineConfig({
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    // My macOS (too old) setup has issues with Firefox and WebKit, so these are disabled for now but left as reference.:
+    // My macOS (too old) has compatibility issues with Firefox and WebKit, so these are disabled for now but left as optional:
     // { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     // { name: "webkit", use: { ...devices["Desktop Safari"] } },
   ],

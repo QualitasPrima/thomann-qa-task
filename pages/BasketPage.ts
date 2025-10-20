@@ -36,24 +36,27 @@ export class BasketPage {
   }
 
   /**
-   * ✅ Verify toast notification
+   * ✅ Verify toast popup notification
    */
   async verifyToast(productName: string) {
-    logStep("BasketPage", "Checking toast notification...");
+    logStep("BasketPage", "Check toast popup notification...");
 
     const toast = this.page.locator(this.selectors.toast);
 
     await toast.waitFor({ state: "visible", timeout: 8000 });
     await expect(toast).toContainText(productName, { timeout: 2000 });
 
-    logStep("BasketPage", `✅ Toast confirmed for product: ${productName}`);
+    logStep(
+      "BasketPage",
+      `✅ Toast popup confirmed for product: ${productName}`
+    );
   }
 
   /**
    * ✅ Verify product item, price, shipping cost, and total price
    */
   async verifyBasketDetails(expectedName: string) {
-    logStep("BasketPage", "Verifying basket details...");
+    logStep("BasketPage", "Verify basket details...");
 
     const name = await getText(this.page.locator(this.selectors.itemHeadline));
     const qty = await getText(this.page.locator(this.selectors.quantity));

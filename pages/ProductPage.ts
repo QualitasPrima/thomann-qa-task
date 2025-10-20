@@ -17,7 +17,7 @@ export class ProductPage {
   }
 
   /**
-   * ✅ Ensure the product page has loaded
+   * ✅ Ensure the product page successfully loads
    */
   async verifyLoaded(expectedTitle: string) {
     logStep("ProductPage", `Verify product page: ${expectedTitle}`);
@@ -33,22 +33,23 @@ export class ProductPage {
    * ✅ Confirm price and quantity elements are visible and valid
    */
   async verifyPriceAndQuantity() {
-    const priceEl = this.page.locator("div.price.fx-text.fx-text--no-margin");
+    const priceEl = this.page.locator(this.selectors.price);
     await expect(priceEl).toBeVisible({ timeout: CONFIG.TIMEOUT.medium });
 
-    const price = await priceEl.evaluate((el) => {
-      const node = Array.from(el.childNodes).find(
-        (n) => n.nodeType === Node.TEXT_NODE
-      );
-      return node ? node.textContent?.trim() ?? "N/A" : "N/A";
-    });
+    // ✅ Extract the text, then filter to keep only digits, commas, periods, and €
+    const rawPrice = ((await priceEl.innerText()) || "")
+      .replace(/\s+/g, " ") // normalize whitespace
+      .trim();
 
-    const qtyEl = this.page.locator(".fx-input-quantity__label");
+    const match = rawPrice.match(/[\d.,]+\s*€?/); // match price pattern
+    const price = match ? match[0].trim() : "N/A";
+
+    const qtyEl = this.page.locator(this.selectors.quantity);
     await expect(qtyEl).toHaveText("1", { timeout: CONFIG.TIMEOUT.medium });
 
     logStep(
       "ProductPage",
-      `✅ Check Product Price and quantity: ${price}, Qty: 1`
+      `✅ Check Product price and uantity: ${price}, Qty: 1`
     );
   }
 

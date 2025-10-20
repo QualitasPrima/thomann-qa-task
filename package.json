@@ -1,14 +1,26 @@
 {
   "name": "thomann-qa-task",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "description": "E2E QA automation project for Thomann CableGuy using Playwright + TypeScript",
+  "author": "Qualitas Prima",
+  "license": "MIT",
+  "keywords": ["playwright", "typescript", "qa", "automation", "e2e", "testing"],
+  "scripts": {
+    "test": "npx playwright test",                      
+    "test:headed": "npx playwright test --headed",      
+    "test:ui": "npx playwright test --ui",              
+    "test:spec": "npx playwright test tests/thomann-cable-builder.spec.ts", 
+    "report": "npx playwright show-report",             
+    "report:clean": "rm -rf playwright-report/ test-results/", 
+    "install:browsers": "npx playwright install --with-deps",
+    "lint": "npx prettier --check .",
+    "format": "npx prettier --write .",
+    "ci:test": "npx playwright test --reporter=dot",
+    "ci:report": "npx playwright show-report"
+  },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
-    "@types/node": "^24.8.1"
+    "@types/node": "^24.8.1",
+    "prettier": "^3.2.5"
   }
 }
