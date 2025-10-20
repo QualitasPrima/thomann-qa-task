@@ -20,7 +20,7 @@ export class ProductPage {
    * ✅ Ensure the product page has loaded
    */
   async verifyLoaded(expectedTitle: string) {
-    logStep("ProductPage", `Verify product page for: ${expectedTitle}`);
+    logStep("ProductPage", `Verify product page: ${expectedTitle}`);
 
     await expect(this.page.locator(this.selectors.title)).toContainText(
       expectedTitle,

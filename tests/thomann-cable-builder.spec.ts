@@ -20,10 +20,10 @@ test.describe("Thomann CableGuy E2E Flow", () => {
 
     // === STEP 1: CableGuy flow ===
     await cableGuy.goto();
-    await cableGuy.selectCable(beginning, end);
-    await cableGuy.selectManufacturer(brand);
+    await cableGuy.selectCableAtRandom(beginning, end);
+    await cableGuy.selectManufacturerAtRandom(brand);
 
-    const { title } = await cableGuy.SelectProduct();
+    const { title } = await cableGuy.selectProductAtRandom();
 
     // === STEP 2: Product page ===
     await productPage.verifyLoaded(title);
