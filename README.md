@@ -45,6 +45,7 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ### 🧱 Code Reusability & Modularity
 
 - Common logic extracted into:
+  
   - `helpers/uiHelpers.ts` → Shared UI utilities 
   - `utils/config.ts` → Centralized constants (timeouts, base URL)  
   - `utils/logger.ts` → Unified step logging
@@ -53,6 +54,7 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ### 🎧 Readability & Maintainability
 
 - Clean, readable syntax:
+  
   ```ts
   await cableGuy.selectCableAtRandom("BNC male", "BNC female");
   await cableGuy.selectManufacturerAtRandom("Sennheiser");
@@ -126,15 +128,19 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ### 📦 Install & Run
 
 **Clone the repository**
+
 `git clone https://github.com/QualitasPrima/thomann-qa-task.git`
 
 **Navigate into the directory**
+
 `cd thomann-qa-task`
 
 **Install Node.js dependencies**
+
 `npm install`
 
 **Install Playwright browsers (once)**
+
 `npx playwright install`
 
 ---
@@ -142,12 +148,15 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ### ▶️ Run Tests
 
 **Run tests in UI mode (visual)**
+
 `npx playwright test --ui`
 
 **Run tests headlessly (CLI)**
+
 `npx playwright test`
 
 **Open the HTML test report**
+
 `npx playwright show-report`
 
 ---
@@ -155,9 +164,11 @@ Each run uses a different random combination, ensuring **test variety** and **da
 ### 📊 Test Reporting
 
 After running tests, an HTML report is automatically generated under the following path:
+
 `playwright-report/index.html`
 
 You can view it by running the script defined in your package.json:
+
 `npm run report`
 
 ---
@@ -185,6 +196,7 @@ This style promotes human-readable test execution even without needing or openin
 ### 🤖 Continuous Integration (CI)
 
 This project includes a **GitHub Actions workflow** located in the following path:
+
 `.github/workflows/playwright.yml`
 
 By default, tests run automatically on:
