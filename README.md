@@ -1,6 +1,6 @@
 # 🎵 Thomann QA Automation Project — “CableGuy Journey” (E2E with Playwright)
 
-> **Note:** This project was completed as a home assignment for the **Senior Software Quality Engineer** role at **Thomann.io**.
+> > **Note:** This project was completed as a technical demonstration of a **data-driven**, **scalable** and **maintainable Playwright E2E automation framework** designed for the Thomann e-commerce platform.
 
 ---
 
